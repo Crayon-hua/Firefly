@@ -43,10 +43,29 @@ jobs:
       - name: Build
         run: pnpm run build
 
+      - name: Prepare dist metadata
+        run: touch dist/.nojekyll
+
       - name: Pack dist
         run: |
           cd dist
           zip -r ../firefly-dist.zip .
+
+      - name: Pack upy bundle
+        env:
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          VERSION="${REF_NAME#v}"
+          mkdir -p bundle/dist
+          cp -r dist/. bundle/dist/
+          cat > bundle/upy.yaml <<EOF
+          name: firefly
+          version: "${VERSION}"
+          type: static
+          static:
+            directory: dist
+          EOF
+          cd bundle && zip -r ../bundle.zip .
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -54,11 +73,19 @@ jobs:
           tag_name: ${{ github.ref_name }}
           name: ${{ github.ref_name }}
           generate_release_notes: true
-          files: firefly-dist.zip
+          files: |
+            firefly-dist.zip
+            bundle.zip
           body: |
             Commit: `${{ github.sha }}`
 
-            下载静态站点构建包（公开仓库可直接 curl，无需 Token）：
+            **upy CD**（`deploy.yaml` 中 `asset: bundle.zip`）：
+
+            ```bash
+            curl -L -o bundle.zip "https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/bundle.zip"
+            ```
+
+            **直接解压静态站**（扁平 dist，无需 Token）：
 
             ```bash
             curl -L -o firefly-dist.zip "https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/firefly-dist.zip"

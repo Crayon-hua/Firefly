@@ -93,7 +93,7 @@ jobs:
 
       - name: Trigger upy deployment
         env:
-          UPY_WEBHOOK_URL: https://upa.qynexai.cn/api/v1/webhook/firefly
+          UPY_WEBHOOK_URL: https://upy.qynexai.cn/api/v1/webhook/firefly
           UPY_WEBHOOK_SECRET: ${{ secrets.UPY_WEBHOOK_SECRET }}
           TAG: ${{ github.ref_name }}
         run: |

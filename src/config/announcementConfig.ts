@@ -5,7 +5,7 @@ export const announcementConfig: AnnouncementConfig = {
 	title: "",
 
 	// 公告内容
-	content: "欢迎来到我的博客！这是一则示例公告。",
+	content: "欢迎来到 Crayon 的博客！本次公告已更新，正在测试 Pier 自动部署与版本拉取速度。",
 
 	// 是否允许用户关闭公告
 	closable: true,

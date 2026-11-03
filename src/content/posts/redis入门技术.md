@@ -1,3 +1,13 @@
+---
+title: Redis 入门技术
+published: 2023-04-04
+description: Redis 基础介绍、安装与入门使用。
+tags:
+  - Redis
+category: 技术
+draft: false
+---
+
 # redis 入门技术
 
 Created by: cat

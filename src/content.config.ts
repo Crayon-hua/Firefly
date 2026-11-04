@@ -1,3 +1,4 @@
+import { upstreamSampleContent } from "./config/contentSourceConfig";
 import { defineCollection } from "astro:content";
 import type { CollectionConfig } from "astro/content/config";
 import { glob } from "astro/loaders";
@@ -60,7 +61,13 @@ type ContentCollection<T> = CollectionConfig<
 >;
 
 const postsCollection: ContentCollection<PostData> = defineCollection({
-	loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/posts" }),
+	loader: glob({
+		pattern: [
+			"**/*.{md,mdx}",
+			...upstreamSampleContent.posts.map((file) => `!${file}`),
+		],
+		base: "./src/content/posts",
+	}),
 	schema: z.object({
 		title: z.string(),
 		published: z.date(),
@@ -97,7 +104,13 @@ const specCollection: ContentCollection<Record<string, never>> =
 	});
 
 const dynamicCollection: ContentCollection<DynamicData> = defineCollection({
-	loader: glob({ pattern: "**/*.md", base: "./src/content/dynamic" }),
+	loader: glob({
+		pattern: [
+			"**/*.md",
+			...upstreamSampleContent.dynamic.map((file) => `!${file}`),
+		],
+		base: "./src/content/dynamic",
+	}),
 	schema: z.object({
 		published: z.date(),
 		pinned: z.boolean().optional().default(false),
@@ -106,7 +119,13 @@ const dynamicCollection: ContentCollection<DynamicData> = defineCollection({
 });
 
 const projectsCollection: ContentCollection<ProjectData> = defineCollection({
-	loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/projects" }),
+	loader: glob({
+		pattern: [
+			"**/*.{md,mdx}",
+			...upstreamSampleContent.projects.map((file) => `!${file}`),
+		],
+		base: "./src/content/projects",
+	}),
 	schema: z.object({
 		title: z.string(),
 		published: z.date(),

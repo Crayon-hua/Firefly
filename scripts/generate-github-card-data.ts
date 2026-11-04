@@ -1,3 +1,4 @@
+import { excludedTemplateContent } from "../src/config/contentSourceConfig";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { glob } from "glob";
@@ -30,6 +31,7 @@ async function findRepositories(): Promise<Map<string, string>> {
 	const contentFiles = await glob(CONTENT_GLOB);
 
 	for (const file of contentFiles) {
+		if (excludedTemplateContent.has(file.replaceAll("\\", "/"))) continue;
 		const content = await fs.readFile(file, "utf-8");
 		for (const match of content.matchAll(GITHUB_DIRECTIVE_PATTERN)) {
 			const repo = match[1];

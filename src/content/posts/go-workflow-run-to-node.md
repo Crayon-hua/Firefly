@@ -5,7 +5,7 @@ description: '从目标节点逆向查找上游、裁剪画布并重接结束节
 tags: [Go, 工作流, FlowGram]
 category: 技术
 slug: go-workflow-run-to-node
-draft: true
+draft: false
 ---
 
 在工作流画布里改了一个「生成汇总」节点，我想拿一份实际输入试一下。点「运行整个流程」，后面的通知节点也可能跟着执行。单独跑汇总节点，又得自己构造一份和上游输出格式一致的数据。
@@ -14,7 +14,7 @@ draft: true
 
 这个按钮叫「运行到这里」。它背后的核心操作发生在执行前：后端先从原画布裁出一张调试子图。
 
-![FlowGram 官方固定布局工作流画布演示](./images/go-workflow-run-to-node-flowgram.gif)
+![FlowGram 官方固定布局工作流画布演示](/post-images/go-workflow-run-to-node-flowgram.gif)
 
 *画布演示来自 [FlowGram 官方固定布局示例](https://flowgram.ai/examples/fixed-layout/fixed-feature-overview.html)。下面的订单流程是本文构造的示例。*
 
